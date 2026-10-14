@@ -17,6 +17,8 @@ name, fid = files[-1]
 data = json.loads(fetch('https://drive.google.com/uc?export=download&id=' + fid))
 html = open(PAGE, encoding='utf-8').read()
 new = re.sub(r'var DATA=.*?;\n', lambda m: 'var DATA=' + json.dumps(data, ensure_ascii=False) + ';\n', html, count=1)
+if 'white-space: pre-line' not in new:
+    new = new.replace('.cs-lead { font-size', '.cs-lead { white-space: pre-line; font-size', 1)
 for n, i in allf:
     m = re.match(r'img-([\w-]+)\.jpg$', n)
     if not m:
